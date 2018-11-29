@@ -87,6 +87,8 @@ Also replace the "settings.py" with the content of settings.py file. The setting
 
 
 
+
+
 ## How to use the script
 
 The parameters of the following command is explained in bellow sections.
@@ -100,6 +102,9 @@ scrapy crawl dragspider -a folder_id=123456 -a start_page_number=0 -a max_page_n
 ![Demo_2](https://media.giphy.com/media/8vR3JX6hvgO7qWBykC/giphy.gif)
 
 
+
+
+
 ## Design Approach
 
 Dragdis has an url format which uses hash signs('#') in the url.
@@ -110,17 +115,23 @@ Since the URL contains a hash sign('#'), automating the scraping process via scr
 Even though we can create an authenticated session via scrapy by login successfully through the login URL, we cannot load the URL visible in location bar to scrape the content. In order to identify what is sent to the server we need to [analyze the network reporting tools](https://stackoverflow.com/questions/11080434/how-to-avoid-scrapy-ignoring-hash-tag#comment14509848_11080434) in the browser. Once we isolate the request sent to server via network tools in browser we can see what is being sent back and forth. 
 
 
+
+
 ### Find the server request and the parameters
 
 The Dragdis service work as follows.
 
 ![UI](./data/UI.PNG)
 
+
+
 In the right most corner of the UI the folder list is available.
 
 Once a user clicks on a folder name that folder id and page number is sent to Dargdis API in a GET request and as the response a JSON array is returned to browser.
 
 ![GET](./data/GET_2.PNG)
+
+
 
 In the browser the JSON array is displays in a grid view. 
 This JSON array contains 100 objects and once the user scrolls down the next 100 items are received via another GET request to Dragdis API.
@@ -135,6 +146,8 @@ GET request for folder id '123456' page '1'
 ```bash
 https://dragdis.com/api/item/list?folderId=123456&page=1&searchValue=&thumbnailSize=s23
 ```
+
+
 
 The structure of JSON object is as follows.
 
@@ -159,6 +172,8 @@ Please note that since the Dragdis service supports saving images and links, the
 
 
 
+
+
 ## Scraping process
 The script will process the JSON object array and will save the content as follows.
 
@@ -174,7 +189,8 @@ Formatted File Name: http_www_imf_org_en_data
 
 - If an error occurred during JSON object processing, an entry will be added to Errors.txt
 
-  
+
+
 
 
 ## Running the tests
@@ -204,7 +220,7 @@ Suppose we found that the page number range is from 0 to 10.
 Then the scrapy crawl command needs to be as follow. 
 
 ```bash
-scrapy crawl dragspider -a folder_id=123456 -a start_page_number=0 -a max_page_number=2
+scrapy crawl dragspider -a folder_id=123456 -a start_page_number=0 -a max_page_number=10
 ```
 
 
@@ -225,7 +241,7 @@ In order to debug scrapy project the solution mention in this [stackoverflow ans
 
 ## Authors
 
-* **Naveen Deshan Ranasinghe**
+* [**Naveen Deshan Ranasinghe**](https://www.linkedin.com/in/deshan-ranasinghe-524b6746/)
 
 
 
